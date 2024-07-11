@@ -1,0 +1,75 @@
+```{r}
+library(MASS)
+```
+```{r}
+df=sakthi.ds
+```
+```{r}
+View(df)
+```
+```{r}
+head(df)
+```
+```{r}
+tail(df)
+```
+```{r}
+summary(df)
+```
+```{r}
+dim(df)
+```
+```{r}
+colnames(df)
+```
+```{r}
+colSums(is.na(df))
+```
+```{r}
+library(dplyr)
+```
+```{r}
+library(ggplot2)
+```
+```{r}
+ggplot(df, aes(x = salary)) +
+  geom_histogram(binwidth = 10000, fill = 'blue', color = 'black', alpha = 0.7) +
+  labs(title = 'Distribution of Salaries', x = 'Salary', y = 'Frequency') +
+  theme_minimal()
+```
+```{r}
+ggplot(df, aes(x = experience_level, y = salary, fill = experience_level)) +
+  geom_boxplot() +
+  labs(title = 'Salaries by Experience Level', x = 'Experience Level', y = 'Salary') +
+  theme_minimal()
+```
+```{r}
+top_job_titles <- df %>%
+  count(job_title) %>%
+  top_n(10, n) %>%
+  pull(job_title)
+
+filtered_data <- df %>%
+  filter(job_title %in% top_job_titles)
+
+ggplot(filtered_data, aes(x = job_title, y = salary, fill = job_title)) +
+  geom_boxplot() +
+  labs(title = 'Salaries by Job Title', x = 'Job Title', y = 'Salary') +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+ggplot(df, aes(x = company_location, y = salary, fill = company_location)) +
+  geom_boxplot() +
+  labs(title = 'Salaries by Company Location', x = 'Company Location', y = 'Salary') +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+```{r}
+ggplot(df, aes(x = company_size, y = salary, fill = company_size)) +
+  geom_boxplot() +
+  labs(title = 'Salaries by Company Size', x = 'Company Size', y = 'Salary') +
+  theme_minimal()
+
+```
